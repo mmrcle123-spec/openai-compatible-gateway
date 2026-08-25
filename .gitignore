@@ -1,0 +1,7 @@
+# secrets / local config
+.env
+*.key
+*.pem
+config.local.*
+node_modules/
+.DS_Store
