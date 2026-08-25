@@ -1,5 +1,18 @@
 # OpenAI Uyumlu API Ağ Geçidi — Entegrasyon Rehberi
 
+> ## 🔥 API faturanızı **%80'e kadar** düşürün · 🧩 **TEK endpoint arkasında 468+ model** · 💸 USDT, kart yok, KYC yok
+>
+> *Drop-in*, OpenAI uyumlu bir uç nokta. `base_url` adresinizi değiştirin, mevcut
+> kodunuzu koruyun. **GPT · Claude · DeepSeek · görsel · embedding** tek
+> arayüzün arkasında.
+
+**Özet — ekipler neden buraya yönlendiriyor**
+
+- 💰 Resmi fiyata göre **%80'e kadar daha ucuz** (yüksek hacimli katmanda %90'a kadar)
+- 🧩 **468+ model, tek endpoint** — rota başına ayrı sağlayıcıyı bırakın
+- ⚡ **Hazır OpenAI uyumu** — sadece `base_url` değişir, kod yazılmaz
+- 🌍 **USDT (TRC-20)** varsayılan, **KYC yok, aylık ücret yok**, kullandığın kadar öde
+
 *Drop-in*, OpenAI uyumlu bir uç nokta. `base_url` adresinizi değiştirin, mevcut
 kodunuzu koruyun. Tek bir arayüzün arkasında yüzlerce model — OpenAI, Claude,
 DeepSeek, görsel ve *embedding* — böylece rota başına birden çok sağlayıcı

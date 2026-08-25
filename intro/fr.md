@@ -1,5 +1,18 @@
 # Passerelle API compatible OpenAI — Guide d'intégration
 
+> ## 🔥 Réduisez votre facture API jusqu'à **80%** · 🧩 **468+ modèles derrière UN seul endpoint** · 💸 USDT, sans carte, sans KYC
+>
+> Un endpoint *drop-in*, compatible avec l'API OpenAI. Changez votre `base_url`
+> et conservez votre code. **GPT · Claude · DeepSeek · image · embedding**
+> derrière une seule interface.
+
+**En bref — pourquoi les équipes pointent ici**
+
+- 💰 **Jusqu'à 80% moins cher** que le tarif officiel (jusqu'à 90% sur les niveaux à fort volume)
+- 🧩 **468+ modèles, un endpoint** — arrêtez de câbler un fournisseur différent par route
+- ⚡ **Compatibilité OpenAI immédiate** — changez `base_url` uniquement, zéro réécriture
+- 🌍 **USDT (TRC-20)** par défaut, **sans KYC, sans abonnement**, paiement à l'usage
+
 Un endpoint *drop-in*, compatible avec l'API OpenAI. Changez votre `base_url` et
 conservez votre code actuel. Quelques centaines de modèles derrière une seule
 interface — OpenAI, Claude, DeepSeek, image et *embeddings* — pour ne pas gérer

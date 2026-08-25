@@ -1,5 +1,18 @@
 # Gateway de API Compatível com OpenAI — Guia de Integração
 
+> ## 🔥 Corte sua conta de API em até **80%** · 🧩 **468+ modelos atrás de UM endpoint** · 💸 USDT, sem cartão, sem KYC
+>
+> Um endpoint *drop-in*, compatível com a API da OpenAI. Troque seu `base_url` e
+> mantenha o código. **GPT · Claude · DeepSeek · imagem · embedding** atrás de
+> uma só interface.
+
+**Resumo — por que equipes apontam para cá**
+
+- 💰 **Até 80% mais barato** que o preço de lista oficial (até 90% em tier de alto volume)
+- 🧩 **468+ modelos, um endpoint** — pare de conectar um provedor diferente por rota
+- ⚡ **Compatibilidade OpenAI drop-in** — só troca `base_url`, zero reescrita
+- 🌍 **USDT (TRC-20)** por padrão, **sem KYC, sem mensalidade**, pagamento por uso
+
 Um endpoint *drop-in*, compatível com a API da OpenAI. Troque seu `base_url` e
 mantenha seu código atual. Algumas centenas de modelos atrás de uma única
 interface — OpenAI, Claude, DeepSeek, imagem e *embeddings* — para você não

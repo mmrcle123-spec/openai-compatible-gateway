@@ -1,5 +1,18 @@
 # Pasarela API compatible con OpenAI — Guía de integración
 
+> ## 🔥 Reduce tu factura de API hasta un **80%** · 🧩 **468+ modelos tras UN solo endpoint** · 💸 USDT, sin tarjeta, sin KYC
+>
+> Endpoint *drop-in*, compatible con la API de OpenAI. Cambia tu `base_url` y
+> conserva el código. **GPT · Claude · DeepSeek · imagen · embedding** detrás de
+> una sola interfaz.
+
+**Resumen — por qué los equipos apuntan aquí**
+
+- 💰 **Hasta 80% más barato** que el precio de lista oficial (hasta 90% en tramos de alto volumen)
+- 🧩 **468+ modelos, un endpoint** — deja de cablear un proveedor distinto por ruta
+- ⚡ **Compatibilidad OpenAI drop-in** — solo cambias `base_url`, cero reescritura
+- 🌍 **USDT (TRC-20)** por defecto, **sin KYC, sin cuota mensual**, pago por uso
+
 Un endpoint *drop-in*, compatible con la API de OpenAI. Cambia tu `base_url` y
 conserva tu código actual. Unas pocas centenas de modelos detrás de una sola
 interfaz — OpenAI, Claude, DeepSeek, imagen y *embeddings* — para que no tengas

@@ -1,5 +1,17 @@
 # Cổng API tương thích OpenAI — Hướng dẫn tích hợp
 
+> ## 🔥 Cắt giảm hóa đơn API lên đến **80%** · 🧩 **468+ mô hình sau MỘT endpoint** · 💸 USDT, không cần thẻ, không KYC
+>
+> Một endpoint *drop-in*, tương thích với API OpenAI. Đổi `base_url`, code giữ
+> nguyên. **GPT · Claude · DeepSeek · ảnh · embedding** sau một giao diện.
+
+**Tóm tắt — tại sao các đội hướng về đây**
+
+- 💰 **Rẻ hơn tới 80%** so với giá chính thức (tới 90% ở gói khối lượng lớn)
+- 🧩 **468+ mô hình, một endpoint** — thôi cắm riêng từng nhà cung cấp mỗi route
+- ⚡ **Tương thích OpenAI sẵn sàng** — chỉ đổi `base_url`, không viết lại code
+- 🌍 **USDT (TRC-20)** mặc định, **không KYC, không phí hàng tháng**, trả tiền theo dùng
+
 Một endpoint *drop-in*, tương thích với API OpenAI. Đổi `base_url` và giữ nguyên
 mã hiện tại. Hàng trăm mô hình đứng sau một giao diện — OpenAI, Claude,
 DeepSeek, hình ảnh và *embedding* — để bạn không phải quản lý nhiều nhà cung cấp

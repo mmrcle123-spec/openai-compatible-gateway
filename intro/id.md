@@ -1,5 +1,18 @@
 # Gateway API Kompatibel OpenAI — Panduan Integrasi
 
+> ## 🔥 Pangkas tagihan API hingga **80%** · 🧩 **468+ model di balik SATU endpoint** · 💸 USDT, tanpa kartu, tanpa KYC
+>
+> Sebuah endpoint *drop-in*, kompatibel dengan API OpenAI. Ganti `base_url` dan
+> kode tetap sama. **GPT · Claude · DeepSeek · gambar · embedding** di balik satu
+> antarmuka.
+
+**Ringkas — mengapa tim mengarahkan ke sini**
+
+- 💰 **Hingga 80% lebih murah** dari harga resmi (hingga 90% di tier volume tinggi)
+- 🧩 **468+ model, satu endpoint** — berhenti menyambungkan penyedia berbeda per rute
+- ⚡ **Kompatibel OpenAI langsung pakai** — cukup ganti `base_url`, tanpa tulis ulang kode
+- 🌍 **USDT (TRC-20)** bawaan, **tanpa KYC, tanpa biaya bulanan**, bayar per pakai
+
 Sebuah endpoint *drop-in*, kompatibel dengan API OpenAI. Ganti `base_url` Anda
 dan pertahankan kode yang sudah ada. Beberapa ratus model di balik satu
 antarmuka — OpenAI, Claude, DeepSeek, gambar, dan *embedding* — sehingga Anda
