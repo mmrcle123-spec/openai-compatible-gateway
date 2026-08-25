@@ -12,7 +12,6 @@
 - 💰 **Up to 80% cheaper** than official list price (up to 90% on high-volume tiers)
 - 🧩 **468+ models, one endpoint** — stop wiring a different provider per route
 - ⚡ **Multi-protocol native** — OpenAI, Anthropic Claude & Gemini native formats, not just OpenAI chat
-- 🔌 **Plugs into NewAPI / One API** — native channels per format, not just raw SDKs
 - 🌍 **USDT (TRC-20)** by default, **no KYC, no monthly fee**, pay as you go
 
 This guide is written for **operators who already run an app, gateway, or
@@ -139,24 +138,6 @@ up to 90% on high-volume tiers).
 Full breakdown: [`PRICING.md`](PRICING.md). Exact per-model rates are returned
 by the gateway's pricing endpoint and shown in the dashboard. Rates move with
 upstream cost; the table above is the operating band, not a fixed quote.
-
----
-
-## Self-hosted gateways — 🔌 NewAPI / One API / VoAPI
-
-Beyond calling the endpoint straight from an SDK, this gateway drops into
-**self-hosted API management panels as native channels for each format** — not
-just OpenAI:
-
-- **NewAPI** (`Calcium-Ion/new-api`): add one channel per format — `OpenAI` →
-  `https://api.airai.cc/v1`, `Anthropic` → `https://api.airai.cc/v1/anthropic`,
-  `Gemini` → `https://api.airai.cc/v1/gemini` *(confirm Claude/Gemini paths)*.
-- **One API / VoAPI / similar panels** — same native channel config per format.
-- Any panel that proxies OpenAI / Anthropic / Gemini upstreams works the same.
-
-All 468+ models sit behind one account and are exposed in **every native
-format** through the panel's UI. Step-by-step:
-[`examples/newapi.md`](examples/newapi.md).
 
 ---
 
