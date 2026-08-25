@@ -1,7 +1,9 @@
 # Async tasks — video, music, Replicate, Fal
 
 Long-running generations (video, music, some image models) run as **async
-tasks**: submit → poll / callback → fetch result. Base: `https://api.airai.cc/v1`.
+tasks**: submit → poll / callback → fetch result. Base: `https://api.airai.cc/v1`,
+endpoint `/async/tasks`. See also [models/video.md](../models/video.md) and
+[models/music.md](../models/music.md).
 
 ## Task lifecycle
 
@@ -9,26 +11,29 @@ tasks**: submit → poll / callback → fetch result. Base: `https://api.airai.c
 2. **Poll** `GET /async/tasks/{task_id}`, or wait for the webhook callback.
 3. When `status: succeeded`, fetch the result URL / data.
 
-## Submit a video task (example: Kling)
+## Submit a video task (Kling)
 
 ```bash
 curl https://api.airai.cc/v1/async/tasks \
   -H "Authorization: Bearer $KEY" \
   -H "Content-Type: application/json" \
-  -d '{
-    "type": "video",
-    "model": "kling",
-    "input": {"prompt": "a city at night, neon lights", "duration": 5}
-  }'
+  -d '{"type":"video","model":"kling",
+       "input":{"prompt":"a city at night, neon lights","duration":5}}'
 # -> {"task_id":"abc123","status":"processing"}
 ```
 
-## Poll
+## Poll (Python)
 
-```bash
-curl https://api.airai.cc/v1/async/tasks/abc123 \
-  -H "Authorization: Bearer $KEY"
-# -> {"task_id":"abc123","status":"succeeded","result":{"url":"https://..."}}
+```python
+import time, requests
+BASE = "https://api.airai.cc/v1"
+hdr = {"Authorization": f"Bearer {KEY}"}
+while True:
+    t = requests.get(f"{BASE}/async/tasks/abc123", headers=hdr).json()
+    if t["status"] in ("succeeded", "failed", "cancelled"):
+        break
+    time.sleep(3)
+print(t["status"], t.get("result", {}).get("url"))
 ```
 
 ## Callback (webhook)
@@ -36,12 +41,11 @@ curl https://api.airai.cc/v1/async/tasks/abc123 \
 Pass a `callback_url`; the gateway POSTs the finished task to it:
 
 ```json
-{
-  "task_id": "abc123",
-  "status": "succeeded",
-  "result": { "url": "https://..." }
-}
+{ "task_id": "abc123", "status": "succeeded",
+  "result": { "url": "https://..." } }
 ```
+
+For production, prefer the callback over polling.
 
 ## Status codes
 
@@ -53,16 +57,27 @@ Pass a `callback_url`; the gateway POSTs the finished task to it:
 | `failed` | errored (see `error`) |
 | `cancelled` | cancelled by caller |
 
-## Supported async providers
+## Per-provider parameters
 
-| Provider | Type | Notes |
-|---|---|---|
-| **Kling** | video | text / image to video |
-| **Luma** | video | Dream Machine |
-| **MiniMax** | video | |
-| **Jimeng** | video | |
-| **Fal** | image / video | via `/fal-ai/{model}` shim |
-| **Suno** | music | via `/suno/...` shim |
+| Provider | Example `input` fields |
+|---|---|
+| **Kling** | `prompt`, `image` (start frame), `duration` |
+| **Luma** | `prompt`, `aspect_ratio` (`16:9`/`9:16`) |
+| **MiniMax** | `prompt`, `duration` |
+| **Jimeng** | `prompt` |
+| **Fal** | forwarded to `/fal-ai/{model}` (see shim below) |
+
+## Submit a music task (Suno)
+
+```bash
+curl https://api.airai.cc/v1/async/tasks \
+  -H "Authorization: Bearer $KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"type":"music","model":"suno",
+       "input":{"prompt":"lo-fi hip hop, rainy night",
+                "lyrics":"optional lyrics here",
+                "instrumental":false}}'
+```
 
 ## Replicate shim
 
@@ -82,9 +97,9 @@ curl https://api.airai.cc/fal-ai/flux-pro \
   -d '{"prompt":"a castle on a cliff"}'
 ```
 
-## Notes
+## Billing
 
-- Async tasks are billed under the **video / music** group fee-rate (see
-  `PRICING.md`) — these carry a premium over base due to compute cost.
-- Polling interval: 2–5 s is reasonable; rely on the callback for production.
-- Failed tasks are not billed (check your dashboard for final accounting).
+Async tasks (video / music) are billed under the **video / music** group
+fee-rate (see [`PRICING.md`](../PRICING.md)) — a premium over base. Failed
+tasks are not billed (final accounting on the dashboard). Polling interval of
+2–5 s is reasonable for development.

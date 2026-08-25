@@ -210,6 +210,7 @@ Runnable, copy-paste snippets:
 - [`examples/claude-code.md`](examples/claude-code.md) — native Anthropic setup + SDK sample
 - [`examples/gemini-cli.md`](examples/gemini-cli.md) — native Gemini setup + SDK sample
 - [`examples/frontends.md`](examples/frontends.md) — 15 clients, step by step
+- Multilingual client guides: [es](examples/frontends.es.md) · [pt](examples/frontends.pt.md) · [tr](examples/frontends.tr.md) · [ru](examples/frontends.ru.md) · [ar](examples/frontends.ar.md) · [id](examples/frontends.id.md) · [fr](examples/frontends.fr.md) · [vi](examples/frontends.vi.md)
 - [`examples/images.md`](examples/images.md) — DALL·E 3, gpt-image-1, FLUX, editing
 - [`examples/audio.md`](examples/audio.md) — whisper transcription + TTS
 - [`examples/embeddings.md`](examples/embeddings.md) — 3-small / 3-large / ada

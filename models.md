@@ -4,72 +4,36 @@ All model families below are reachable through **one account** and **one key**
 on this gateway. Model names are passed verbatim in the `model` field of any
 supported protocol. Exact availability is shown on the status page.
 
-## Text / chat
+## Pick a family
+
+| Family | Route | Page |
+|---|---|---|
+| **GPT** (chat, vision, o-series reasoning) | OpenAI `/v1` | [models/gpt.md](models/gpt.md) |
+| **Claude** (native Anthropic) | Anthropic root | [models/claude.md](models/claude.md) |
+| **DeepSeek** (chat, reasoner) | OpenAI `/v1` | [models/deepseek.md](models/deepseek.md) |
+| **Gemini** (native Google) | Gemini root | [models/gemini.md](models/gemini.md) |
+| **Image** (DALL·E / FLUX / Seedream / imagen / qwen) | OpenAI `/v1` | [models/image.md](models/image.md) |
+| **Audio** (whisper ASR/TTS) | OpenAI `/v1` | [models/audio.md](models/audio.md) |
+| **Embeddings** (3-small / 3-large / ada) | OpenAI `/v1` | [models/embeddings.md](models/embeddings.md) |
+| **Realtime** (websocket voice/text) | OpenAI `/v1` | [models/realtime.md](models/realtime.md) |
+| **Video** (Kling / Luma / MiniMax / Jimeng / Fal) | async task | [models/video.md](models/video.md) |
+| **Music** (Suno) | async task | [models/music.md](models/music.md) |
+
+## Text / chat (quick reference)
 
 | Family | Example models | Notes |
 |---|---|---|
 | **GPT** | `gpt-4o`, `gpt-4o-mini`, `gpt-4.1` | General chat, vision-capable |
-| **GPT reasoning** | `o1`, `o3`, `o4-mini` | Use `reasoning_effort: low\|medium\|high` |
-| **Claude** | `claude-3.5-sonnet`, `claude-3.7-sonnet`, `claude-opus-4`, `claude-haiku-3.5` | Via native Anthropic endpoint |
+| **GPT reasoning** | `o1`, `o3`, `o4-mini` | `reasoning_effort: low\|medium\|high` |
+| **Claude** | `claude-3.5-sonnet`, `claude-3.7-sonnet`, `claude-opus-4`, `claude-haiku-3.5` | Native Anthropic endpoint |
 | **DeepSeek** | `deepseek-chat`, `deepseek-reasoner` | Strong price/performance |
-| **Gemini** | `gemini-1.5-pro`, `gemini-2.0-flash`, `gemini-2.5-pro` | Via native Gemini endpoint |
+| **Gemini** | `gemini-1.5-pro`, `gemini-2.0-flash`, `gemini-2.5-pro` | Native Gemini endpoint |
 | **Qwen / others** | `qwen-max`, `qwen-plus` | Open-weight alternatives |
 
 ## Vision (image input)
 
-All chat models above that are vision-capable accept `image_url` content
-blocks: `gpt-4o`, `claude-3.5-sonnet`, `gemini-1.5-pro`, etc.
-
-## Image generation
-
-| Model | Endpoint | Notes |
-|---|---|---|
-| **DALL·E 3** | `/images/generations` | OpenAI format |
-| **gpt-image-1** | `/images/generations`, `/images/edits` | ≤4 MB edit inputs |
-| **FLUX.1** | `/images/generations` (or Fal shim) | Open-weight, high quality |
-| **Seedream** | `/images/generations` | |
-| **imagen-4** | `/images/generations` | Google imagen |
-| **qwen-image** | `/images/generations` | |
-
-## Audio
-
-| Model | Endpoint | Notes |
-|---|---|---|
-| **whisper-1** | `/audio/transcriptions` | ASR, many languages |
-| **tts-1** | `/audio/speech` | 6 built-in voices |
-
-## Embeddings
-
-| Model | Endpoint |
-|---|---|
-| `text-embedding-3-small` | `/embeddings` |
-| `text-embedding-3-large` | `/embeddings` |
-| `text-embedding-ada-002` | `/embeddings` |
-
-## Realtime
-
-| Model | Endpoint |
-|---|---|
-| `gpt-4o-realtime-preview` | OpenAI realtime websocket |
-
-## Video (async tasks)
-
-| Provider | Notes |
-|---|---|
-| **Kling** | Text/image-to-video, async |
-| **Luma** | Dream Machine, async |
-| **MiniMax** | Video generation, async |
-| **Jimeng** | Async |
-| **Fal** | Via `/fal-ai/{model}` shim |
-
-See [`examples/async-tasks.md`](examples/async-tasks.md) for the task / poll
-/ callback flow.
-
-## Music
-
-| Provider | Notes |
-|---|---|
-| **Suno** | Via `/suno/...` shim |
+All vision-capable chat models accept `image_url` content blocks:
+`gpt-4o`, `claude-3.5-sonnet`, `gemini-1.5-pro`, etc.
 
 ## Replicate / Fal shims
 

@@ -1,8 +1,7 @@
 # Realtime (websocket)
 
-Low-latency, token-streaming voice / text in the OpenAI realtime shape. Base:
-`https://api.airai.cc/v1`. See also the
-[model family page](../models/realtime.md).
+Low-latency, token-streaming voice / text over a websocket, in the OpenAI
+realtime shape. Base: `https://api.airai.cc/v1`.
 
 ## Model
 
@@ -57,11 +56,12 @@ asyncio.run(main())
 - Tokens are short-lived — mint them **server-side**. Never ship your gateway
   key to the browser; use an ephemeral token instead.
 
-## Billing
+## Group fee-rate
 
-Realtime is billed under the **realtime** group fee-rate (see
-[`PRICING.md`](../PRICING.md)), a modest premium over base due to compute.
+Realtime is billed under the **realtime** group (see [PRICING](../PRICING.md)),
+which carries a modest premium over base due to compute cost.
 
 ## Related
 
-- [Async video / music](../examples/async-tasks.md)
+- [Async tasks](../models/video.md) for long-running media.
+- Back to [model index](../models.md)
