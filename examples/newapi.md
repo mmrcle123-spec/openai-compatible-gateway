@@ -2,28 +2,30 @@
 
 NewAPI, One API, VoAPI and similar self-hosted panels manage AI API keys and
 expose them to your apps behind their own interface. This gateway is
-**OpenAI-compatible**, so it slots in as a normal OpenAI-type channel — you do
-not need any special plugin.
+**multi-protocol** — it speaks OpenAI, Anthropic Claude, and Gemini natively —
+so it slots in as a **native channel per format**, no special plugin.
 
 ## NewAPI (`Calcium-Ion/new-api`)
 
 1. In NewAPI, go to **渠道 (Channels) → 新建渠道 (Add Channel)**.
-2. Set the fields:
+2. Add **one channel per native format**:
 
-   | Field | Value |
-   |---|---|
-   | 类型 (Type) | `OpenAI` (or `Custom`) |
-   | 名称 (Name) | anything, e.g. `AirAi` |
-   | 代理 (Base URL / Host) | `https://api.airai.cc/v1` |
-   | 密钥 (Key) | your gateway key (from signup or TG `@mmrcle`) |
-   | 模型 (Models) | leave default / full list, or map specific ones |
+   | Format | 类型 (Type) | 代理 (Base URL) |
+   |---|---|---|
+   | OpenAI | `OpenAI` | `https://api.airai.cc/v1` |
+   | Anthropic Claude | `Anthropic` | `https://api.airai.cc/v1/anthropic` *(confirm path)* |
+   | Gemini | `Gemini` | `https://api.airai.cc/v1/gemini` *(confirm path)* |
+
+   For each: 名称 (Name) = e.g. `AirAi-OpenAI`, 密钥 (Key) = your gateway key
+   (from signup or TG `@mmrcle`).
 
 3. Save, then click **测试 (Test)** — it should return the model list.
-4. That's it. The panel now routes OpenAI-API traffic for all 468+ models
-   through this gateway.
+4. That's it. The panel now routes traffic for all 468+ models through this
+   gateway in every native format.
 
-> The gateway speaks the OpenAI API shape, so any panel that can add an
-> OpenAI-compatible upstream works identically (One API, VoAPI, etc.).
+> Because the gateway speaks the native shape of each provider, any panel that
+> can add OpenAI / Anthropic / Gemini upstreams works identically (One API,
+> VoAPI, etc.).
 
 ## Why do this
 

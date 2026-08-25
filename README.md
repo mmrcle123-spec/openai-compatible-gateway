@@ -1,22 +1,25 @@
-# OpenAI-Compatible LLM API Gateway — Save up to 80%, 468+ Models, One Endpoint
+# Multi-Protocol LLM API Gateway — OpenAI / Claude / Gemini Native — Save up to 80%, 468+ Models
 
-> ## 🔥 Cut your AI API bill by up to **80%** &nbsp;·&nbsp; 🧩 **468+ models behind ONE endpoint** &nbsp;·&nbsp; 💸 USDT, no card, no KYC
+> ## 🔥 Cut your AI API bill by up to **80%** &nbsp;·&nbsp; 🧩 **468+ models, multi-protocol** &nbsp;·&nbsp; 💸 USDT, no card, no KYC
 >
-> A drop-in, OpenAI-compatible gateway. Swap your `base_url`, keep your code.
-> **GPT · Claude · DeepSeek · image · embedding** — all behind one interface.
+> A **multi-protocol** LLM gateway. It speaks **OpenAI, Anthropic Claude, and
+> Google Gemini native formats** — not just OpenAI chat. One account, every
+> dialect. **GPT · Claude · DeepSeek · Gemini · image · embedding** behind one
+> interface.
 
 **TL;DR — why teams point their stack here**
 
 - 💰 **Up to 80% cheaper** than official list price (up to 90% on high-volume tiers)
 - 🧩 **468+ models, one endpoint** — stop wiring a different provider per route
-- ⚡ **Drop-in OpenAI compatibility** — change `base_url` only, zero code rewrite
-- 🔌 **Plugs into NewAPI / One API** — works as an OpenAI-compatible channel, not just raw SDKs
+- ⚡ **Multi-protocol native** — OpenAI, Anthropic Claude & Gemini native formats, not just OpenAI chat
+- 🔌 **Plugs into NewAPI / One API** — native channels per format, not just raw SDKs
 - 🌍 **USDT (TRC-20)** by default, **no KYC, no monthly fee**, pay as you go
 
 This guide is written for **operators who already run an app, gateway, or
-front-end that speaks the OpenAI API** (Python/Node SDKs, Cline, Continue,
-Cursor BYOK, LibreChat, OpenWebUI, SillyTavern, etc.). It covers how to point
-your stack at this endpoint, get a test key, see the models, pricing, and
+front-end that speaks the OpenAI, Anthropic, or Gemini API** (Python/Node SDKs,
+Cline, Continue, Cursor BYOK, Claude Code, LibreChat, OpenWebUI, SillyTavern,
+etc.). It covers how to point your stack at this endpoint in the native format
+your client already uses, get a test key, see the models, pricing, and
 settlement.
 
 ## 🌐 This guide in other languages
@@ -42,9 +45,9 @@ serve every segment — some users have no card, some settle in crypto by defaul
 and some regions aren't covered by mainstream providers' terms of service.
 
 This endpoint is a **settlement-agnostic rail**: USDT (crypto) by default, no
-card, no KYC. Same OpenAI-compatible interface you already use. It is meant to
-sit *alongside* your existing payment methods as an additional route — not
-replace them.
+card, no KYC. Same native interfaces you already use — OpenAI, Anthropic, and
+Gemini. It is meant to sit *alongside* your existing payment methods as an
+additional route — not replace them.
 
 **The two things people actually switch for:**
 
@@ -68,6 +71,24 @@ OPENAI_API_KEY  = "<your-key>"   # get from signup or TG @mmrcle
 - Raw curl: see [`examples/curl.md`](examples/curl.md)
 - Claude Code / Anthropic-protocol note: see [`examples/claude-code.md`](examples/claude-code.md)
 - LibreChat / OpenWebUI / SillyTavern config: see [`examples/frontends.md`](examples/frontends.md)
+
+---
+
+## Supported API formats (not just OpenAI chat)
+
+This gateway is **multi-protocol**: it speaks the **native request/response
+shape of each provider**, so you call it the way your existing SDK already
+expects — no translation shim on your side.
+
+| Format | Use it with | Base URL |
+|---|---|---|
+| **OpenAI native** | OpenAI SDKs, Cline, Continue, Cursor BYOK, LibreChat, OpenWebUI, SillyTavern | `https://api.airai.cc/v1` |
+| **Anthropic Claude native** | Anthropic SDK, **Claude Code** (`ANTHROPIC_BASE_URL`), any Claude client | `https://api.airai.cc/v1/anthropic` *(confirm exact path)* |
+| **Google Gemini native** | Gemini SDK, Vertex-style clients | `https://api.airai.cc/v1/gemini` *(confirm exact path)* |
+
+The **same 468+ models** are reachable in all three native dialects. Point your
+client at the matching base URL with your key. *(Claude/Gemini paths above are
+placeholders — send me the exact native base URLs and I'll lock them in.)*
 
 ---
 
@@ -123,18 +144,18 @@ upstream cost; the table above is the operating band, not a fixed quote.
 
 ## Self-hosted gateways — 🔌 NewAPI / One API / VoAPI
 
-Beyond calling the endpoint straight from an OpenAI SDK, this gateway drops
-into **self-hosted API management panels as an OpenAI-compatible channel** — so
-it is *not* limited to raw OpenAI clients:
+Beyond calling the endpoint straight from an SDK, this gateway drops into
+**self-hosted API management panels as native channels for each format** — not
+just OpenAI:
 
-- **NewAPI** (`Calcium-Ion/new-api`) — add a channel: Type = `OpenAI` (or
-  `Custom`), Base URL = `https://api.airai.cc/v1`, Key = your key.
-- **One API / VoAPI / similar panels** — same OpenAI-compatible channel config.
-- Any panel that can proxy an OpenAI-compatible upstream works the same way.
+- **NewAPI** (`Calcium-Ion/new-api`): add one channel per format — `OpenAI` →
+  `https://api.airai.cc/v1`, `Anthropic` → `https://api.airai.cc/v1/anthropic`,
+  `Gemini` → `https://api.airai.cc/v1/gemini` *(confirm Claude/Gemini paths)*.
+- **One API / VoAPI / similar panels** — same native channel config per format.
+- Any panel that proxies OpenAI / Anthropic / Gemini upstreams works the same.
 
-Because all 468+ models sit behind one OpenAI-compatible URL, you point the
-panel at it **once** and expose every model to your users through the panel's
-own UI / key management. Step-by-step:
+All 468+ models sit behind one account and are exposed in **every native
+format** through the panel's UI. Step-by-step:
 [`examples/newapi.md`](examples/newapi.md).
 
 ---
@@ -162,8 +183,9 @@ your existing stack doesn't serve (no-card users, crypto-native settlement,
 regions outside your current provider's terms).
 
 **Do I need to rewrite my code?**
-If your client speaks the OpenAI API, you only change `base_url` and `api_key`.
-Nothing else.
+No. Call the gateway in whatever native format your client already uses —
+OpenAI, Anthropic Claude, or Gemini. Just change `base_url`
+(or `ANTHROPIC_BASE_URL` / the Gemini base) and your key.
 
 **How do I verify it before paying?**
 Sign up → trial credits → run your own workloads against the endpoint.
