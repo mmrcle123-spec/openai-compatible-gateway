@@ -1,52 +1,126 @@
-# Pasarela API compatible con OpenAI — Guía de integración
+# Pasarela API LLM Multi-Protocolo — OpenAI / Claude / Gemini Nativo — 80% Más Barato, 468+ Modelos
 
-> ## 🔥 Reduce tu factura de API hasta un **80%** · 🧩 **468+ modelos tras UN solo endpoint** · 💸 USDT, sin tarjeta, sin KYC
+> ## 🔥 Reduce tu factura de API hasta un **80%** · 🧩 **468+ modelos, multi-protocolo** · 💸 USDT, sin tarjeta, sin KYC
 >
-> Endpoint *drop-in*, compatible con la API de OpenAI. Cambia tu `base_url` y
-> conserva el código. **GPT · Claude · DeepSeek · imagen · embedding** detrás de
-> una sola interfaz.
+> Una pasarela LLM **multi-protocolo**. Habla los formatos **nativos de OpenAI,
+> Anthropic Claude y Google Gemini** — no solo el chat de OpenAI. Una cuenta,
+> todos los dialectos. **GPT · Claude · DeepSeek · Gemini · imagen · audio ·
+> embedding · vídeo · música** detrás de una sola interfaz.
 
 **Resumen — por qué los equipos apuntan aquí**
 
-- 💰 **Hasta 80% más barato** que el precio de lista oficial (hasta 90% en tramos de alto volumen)
-- 🧩 **468+ modelos, un endpoint** — deja de cablear un proveedor distinto por ruta
-- ⚡ **Compatibilidad OpenAI drop-in** — solo cambias `base_url`, cero reescritura
+- 💰 **Hasta 80% más barato** que el precio de lista oficial (hasta ~90% en tramos de alto volumen)
+- 🧩 **468+ modelos, una cuenta** — deja de cablear un proveedor distinto por ruta
+- ⚡ **Multi-protocolo nativo** — OpenAI, Anthropic Claude y Gemini nativos, más shims Replicate / Fal / Suno
+- 🤖 **Cobertura de capacidades** — chat, streaming, visión, function calling, embeddings, audio (ASR+TTS), imagen, vídeo, música, realtime
 - 🌍 **USDT (TRC-20)** por defecto, **sin KYC, sin cuota mensual**, pago por uso
+- 🧰 **Drop-in para 15+ clientes** — ChatBox, CherryStudio, Cursor, Cline, Codex, aider, LobeChat, Dify, N8N, NextChat, LangChain, LlamaIndex y más
 
-Un endpoint *drop-in*, compatible con la API de OpenAI. Cambia tu `base_url` y
-conserva tu código actual. Unas pocas centenas de modelos detrás de una sola
-interfaz — OpenAI, Claude, DeepSeek, imagen y *embeddings* — para que no tengas
-que gestionar múltiples proveedores por ruta.
+## Formatos de API soportados
 
-Esta guía está escrita para **operadores que ya ejecutan una app, pasarela o
-front-end que habla la API de OpenAI** (SDK de Python/Node, Cline, Continue,
-Cursor BYOK, LibreChat, OpenWebUI, SillyTavern, etc.).
+Esta pasarela **no** es "solo OpenAI con una capa de traducción". Expone
+**endpoints nativos** para los tres SDK principales, así usas la librería
+oficial de cada proveedor sin cambios.
 
-## Por qué existe (enfoque neutro)
+| Protocolo | Base URL | Cómo lo llamas | Notas |
+|---|---|---|---|
+| **OpenAI** | `https://api.airai.cc/v1` | Pon `base_url` en el SDK de OpenAI | chat, streaming (SSE), visión, function calling, embeddings, audio, imágenes, realtime |
+| **Anthropic Claude** | `https://api.airai.cc` (raíz) | Pon `ANTHROPIC_BASE_URL` en el SDK de Anthropic / Claude Code | API Messages nativa, streaming, tool use |
+| **Google Gemini** | `https://api.airai.cc` (raíz) | Pon `GOOGLE_GEMINI_BASE_URL` en el CLI/SDK de Gemini | generateContent nativo |
+| **Replicate** | `https://api.airai.cc/replicate` | Cliente compatible con Replicate | muchos modelos open-weight tras un shim |
+| **Fal.ai** | `https://api.airai.cc/fal-ai/{model}` | Cliente compatible con Fal | imagen / vídeo tras un shim |
+| **Suno** | `https://api.airai.cc/suno/...` | Cliente compatible con Suno | generación de música |
 
-La mayoría de las apps de IA se construyen sobre una infraestructura de
-facturación con tarjeta / fiat. Esa infraestructura no sirve a todos los
-segmentos: algunos usuarios no tienen tarjeta, otros liquidan en cripto por
-defecto, y algunas regiones no están cubiertas por los términos de servicio de
-los proveedores principales.
+> **¿Por qué la raíz para Claude y Gemini?** Los SDK de Anthropic y Gemini
+> envían peticiones a la raíz del proveedor (p. ej. `https://api.anthropic.com`),
+> no a una sub-ruta `/v1`. Apunta `ANTHROPIC_BASE_URL` / `GOOGLE_GEMINI_BASE_URL`
+> a `https://api.airai.cc` y la pasarela sirve la ruta nativa. El SDK de OpenAI,
+> en cambio, espera `/v1`, así que usa `https://api.airai.cc/v1`.
 
-Este endpoint es un **riel de liquidación agnóstico**: USDT (cripto) por
-defecto, sin tarjeta, sin KYC. La misma interfaz compatible con OpenAI que ya
-usas. Está pensado para convivir *junto a* tus métodos de pago actuales como una
-ruta adicional — no para reemplazarlos.
+## Qué puedes construir
+
+| Capacidad | Ejemplo de modelos |
+|---|---|
+| Chat (texto) | gpt-4o, claude-3.5-sonnet, deepseek-chat, gemini-1.5-pro |
+| Streaming (SSE) | todos los modelos de chat |
+| Visión (imagen de entrada) | gpt-4o, claude-3.5-sonnet, gemini-1.5-pro |
+| Razonamiento (o-series) | o1, o3, o4-mini (`low`/`medium`/`high`) |
+| Function calling / tool use | todos los modelos capaces |
+| Embeddings | text-embedding-3-small, text-embedding-3-large, ada-002 |
+| Audio (ASR + TTS) | whisper-1, tts-1 (6 voces) |
+| Imagen | DALL·E 3, gpt-image-1, FLUX, Seedream, imagen-4, qwen-image |
+| Realtime (websocket) | gpt-4o-realtime |
+| Vídeo (asíncrono) | Kling, Luma, MiniMax, Jimeng, Fal |
+| Música | Suno |
+
+## Modelos
+
+Las grandes familias enrutadas a través de esta pasarela:
+
+- **GPT** — gpt-4o, gpt-4o-mini, gpt-4.1, o1 / o3 / o4-mini (razonamiento)
+- **Claude** — claude-3.5-sonnet, claude-3.7-sonnet, claude-opus-4, claude-haiku
+- **DeepSeek** — deepseek-chat, deepseek-reasoner
+- **Gemini** — gemini-1.5-pro, gemini-2.0-flash, gemini-2.5-pro
+- **Imagen** — DALL·E 3, gpt-image-1, FLUX.1, Seedream, imagen-4, qwen-image
+- **Audio** — whisper-1 (ASR), tts-1 (TTS, 6 voces)
+- **Embeddings** — text-embedding-3-small / -3-large, text-embedding-ada-002
+- **Realtime** — gpt-4o-realtime (websocket)
+- **Vídeo** — Kling, Luma, MiniMax, Jimeng, Fal (asíncrono)
+- **Música** — Suno
+
+Referencia completa: [`../models.md`](../models.md).
+
+## Software y clientes (tutoriales)
+
+Cada cliente de abajo fue verificado contra esta pasarela. La configuración
+siempre es la misma idea: apunta su `base_url` (estilo OpenAI) o su variable de
+entorno de proveedor (Claude / Gemini) a las direcciones de arriba.
+
+| Cliente / herramienta | Protocolo | Dónde configurar |
+|---|---|---|
+| **ChatBox** | OpenAI | API personalizada + base URL |
+| **CherryStudio** | OpenAI + Claude MCP | ajustes de modelo; URL del servidor MCP |
+| **Cursor** | OpenAI (BYOK) | truco del prefijo `new-` |
+| **Cline** | OpenAI | base URL compatible con OpenAI |
+| **Codex** | OpenAI | `config.toml` (3 plataformas) |
+| **aider** | OpenAI | `--openai-api-base` |
+| **Gemini CLI** | Gemini nativo | `GOOGLE_GEMINI_BASE_URL` |
+| **Claude Code** | Anthropic nativo | `ANTHROPIC_BASE_URL` |
+| **LobeChat** | OpenAI | ajustes del proveedor |
+| **Dify** | OpenAI | configuración del proveedor de modelo |
+| **N8N** | OpenAI | nodo HTTP / OpenAI |
+| **NextChat** | OpenAI | variable `BASE_URL` |
+| **Immersive Translate** | OpenAI | base de API de traducción |
+| **LangChain** | OpenAI / Anthropic / Gemini | `base_url` del modelo de chat |
+| **LlamaIndex** | OpenAI | `OPENAI_BASE_URL` |
+
+Guía paso a paso de los 15: [`../examples/frontends.md`](../examples/frontends.md).
 
 ## Inicio rápido
 
 ```python
-OPENAI_BASE_URL = "https://api.airai.cc/v1"
-OPENAI_API_KEY  = "<tu-clave>"   # obténla al registrarte o por TG @mmrcle
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="https://api.airai.cc/v1",
+    api_key="YOUR_KEY",          # al registrarte o por TG @mmrcle
+)
+r = client.chat.completions.create(
+    model="gpt-4o",
+    messages=[{"role":"user","content":"Hola"}],
+)
+print(r.choices[0].message.content)
 ```
 
-- Python: ver [`examples/python.md`](../examples/python.md)
-- Node: ver [`examples/node.md`](../examples/node.md)
-- curl: ver [`examples/curl.md`](../examples/curl.md)
-- Nota Claude Code / protocolo Anthropic: ver [`examples/claude-code.md`](../examples/claude-code.md)
-- LibreChat / OpenWebUI / SillyTavern: ver [`examples/frontends.md`](../examples/frontends.md)
+Claude nativo: `export ANTHROPIC_BASE_URL="https://api.airai.cc"`. Gemini
+nativo: `export GOOGLE_GEMINI_BASE_URL="https://api.airai.cc"`.
+
+- Python: [`../examples/python.md`](../examples/python.md)
+- Node: [`../examples/node.md`](../examples/node.md)
+- curl: [`../examples/curl.md`](../examples/curl.md)
+- Claude Code: [`../examples/claude-code.md`](../examples/claude-code.md)
+- Gemini CLI: [`../examples/gemini-cli.md`](../examples/gemini-cli.md)
+- Imagen / audio / embeddings / realtime / tareas asíncronas: [`../examples/`](../examples/)
 
 ## Obtén una clave de prueba
 
@@ -55,27 +129,19 @@ OPENAI_API_KEY  = "<tu-clave>"   # obténla al registrarte o por TG @mmrcle
 2. **Escríbenos por TG:** `@mmrcle` — para proveedor *white-label* / suministro
    mayorista, claves de prueba o dudas de integración.
 
-## Modelos
-
-Unas pocas centenas de modelos en varias familias, incluyendo:
-
-- **OpenAI:** GPT-4o / 4o-mini, razonamiento o-series, embeddings
-- **Claude:** Opus / Sonnet / Haiku (vía ruta compatible con OpenAI)
-- **DeepSeek:** V3 / R1 y variantes destiladas
-- **Imagen:** SD, Flux y APIs de imagen occidentales comunes
-- **Embedding / rerank** donde esté disponible
-
-La lista en vivo se obtiene con `/v1/models` contra el endpoint.
-
 ## Precios
 
-Tramos transparentes respecto al precio de lista oficial, en el rango
-**~0.03–0.3 del precio de lista oficial** según tramo y familia. Sin cuota
-mensual. Pago por uso. Liquidación en USDT.
+Tres tramos, expresados como **multiplicador del precio de lista oficial**:
 
-- **Standard** (~0.3): uso general, imagen, embeddings
-- **Pro** (~0.15): cargas pesadas de Claude / codificación
-- **Wholesale** (~0.09): operadores de alto volumen, *upstream* white-label
+| Tramo | Multiplicador | vs oficial | Para |
+|---|---|---|---|
+| **Standard** | 0.3× | ~70% menos | desarrolladores, pago por uso |
+| **Pro** | 0.15× | ~85% menos | equipos con volumen estable |
+| **Wholesale** | 0.09× | ~91% menos | alto volumen / revendedores |
+
+Modelo de **grupo de tarifas**: cada familia (chat, razonamiento, visión,
+imagen, audio, embedding, vídeo, música, realtime) lleva un pequeño ajuste sobre
+el multiplicador de tu tramo. Detalle: [`../PRICING.md`](../PRICING.md).
 
 ## Región y disponibilidad
 
@@ -86,22 +152,19 @@ de enrutar tráfico de producción.
 ## Liquidación
 
 - **USDT** (TRC-20) por defecto — sin tarjeta, sin KYC.
-- Otras criptos se consideran para cuentas mayoristas / grandes.
+- Otras criptos (BTC, etc.) para cuentas **mayoristas / grandes**.
 
 ## Preguntas frecuentes
 
-**¿Es esto un reemplazo de mi proveedor actual?**
-No. Es una ruta OpenAI-compatible adicional que puedes llamar para los segmentos
-que tu stack actual no sirve (usuarios sin tarjeta, liquidación cripto-nativa,
-regiones fuera de los términos de tu proveedor).
+**¿Es esto solo un proxy de OpenAI?**
+No. Expone endpoints nativos de Anthropic y Gemini, así puedes seguir usando el
+SDK oficial de cada proveedor. También hace de shim para Replicate / Fal / Suno.
 
 **¿Necesito reescribir mi código?**
-Si tu cliente habla la API de OpenAI, solo cambias `base_url` y `api_key`.
+No. Si tu cliente ya habla OpenAI / Anthropic / Gemini, solo cambias la base URL
+(o la variable de entorno del proveedor). Nada más.
 
 **¿Cómo lo verifico antes de pagar?**
 Regístrate → créditos de prueba → ejecuta tus cargas contra el endpoint.
 
-*Guía de integración técnica. Operado de forma independiente; este documento
-describe el endpoint y cómo conectarse, no es una propuesta de venta.*
-
-🔗 Documentación completa en inglés: [README.md](../README.md) · Ejemplos: [examples/](../examples/)
+🔗 Documentación completa en inglés: [README.md](../README.md) · Ejemplos: [examples/](../examples/) · Modelos: [models.md](../models.md)

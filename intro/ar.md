@@ -1,49 +1,124 @@
-# بوابة API متوافقة مع OpenAI — دليل التكامل
+# بوابة API متعددة البروتوكولات لـ LLM — OpenAI / Claude / Gemini أصلي — أرخص بـ 80%، 468+ نموذجاً
 
-> ## 🔥 خفّض فاتورة واجهة برمجة التطبيقات حتى **80%** · 🧩 **أكثر من 468 نموذجاً خلف نقطة نهاية واحدة** · 💸 USDT، بدون بطاقة، بدون KYC
+> ## 🔥 خفّض فاتورة واجهة برمجة التطبيقات حتى **80%** · 🧩 **468+ نموذجاً، متعدد البروتوكولات** · 💸 USDT، بدون بطاقة، بدون KYC
 >
-> نقطة نهاية (endpoint) جاهزة للاستخدام فوراً، ومتوافقة مع واجهة OpenAI. غيّر
-> `base_url` واحتفظ بكودك. **GPT · Claude · DeepSeek · صور · تضمين** خلف واجهة
-> واحدة.
+> بوابة LLM **متعددة البروتوكولات**. تتحدث الصيغ **الأصلية لـ OpenAI وAnthropic
+> Claude وGoogle Gemini** — ليست مجرد دردشة OpenAI. حساب واحد، كل اللهجات. **GPT ·
+> Claude · DeepSeek · Gemini · صور · صوت · تضمين · فيديو · موسيقى** خلف واجهة واحدة.
 
 **ملخص — لماذا توجّه الفرق حِملها هنا**
 
-- 💰 **أرخص بنسبة تصل إلى 80%** من السعر الرسمي (حتى 90% في الفئات عالية الحجم)
-- 🧩 **أكثر من 468 نموذجاً، نقطة نهاية واحدة** — توقّف عن ربط مزوّد مختلف لكل مسار
-- ⚡ **توافق جاهز مع OpenAI** — تغيّر `base_url` فقط، دون إعادة كتابة الكود
+- 💰 **أرخص بنسبة تصل إلى 80%** من السعر الرسمي (حتى ~90% في فئات الحجم العالي)
+- 🧩 **468+ نموذجاً، حساب واحد** — توقّف عن ربط مزوّد مختلف لكل مسار
+- ⚡ **متعدد البروتوكولات الأصلي** — OpenAI وAnthropic Claude وGemini الأصلي، إضافة إلى shim لـ Replicate / Fal / Suno
+- 🤖 **تغطية كاملة للقدرات** — دردشة، تدفق، رؤية، استدعاء دوال، تضمين، صوت (ASR+TTS)، صور، فيديو، موسيقى، realtime
 - 🌍 **USDT (TRC-20)** افتراضياً، **بدون KYC، بدون رسوم شهرية**، ادفع حسب الاستخدام
+- 🧰 **Drop-in لـ 15+ عميلاً** — ChatBox وCherryStudio وCursor وCline وCodex وaider وLobeChat وDify وN8N وNextChat وLangChain وLlamaIndex والمزيد
 
-نقطة نهاية (endpoint) جاهزة للاستخدام فوراً، ومتوافقة مع واجهة OpenAI. غيّر
-`base_url` واحتفظ بكودك الحالي. خلف واجهة واحدة مئات النماذج — OpenAI وClaude
-وDeepSeek والصور والتضمينات (embeddings) — كي لا تدير عدة مزودين لكل مسار.
+## صيغ API المدعومة
 
-هذا الدليل مكتوب لـ **المشغّلين الذين يشغّلون بالفعل تطبيقاً أو بوابة أو واجهة
-أمامية تتحدث واجهة OpenAI** (حزم Python/Node، وCline، وContinue، وCursor BYOK،
-وLibreChat، وOpenWebUI، وSillyTavern، وغيرها).
+هذه البوابة **ليست** «مجرد OpenAI مع طبقة ترجمة». تكشف **نقاط نهاية أصلية** للـ
+SDK الثلاثة الرئيسية، فتستخدم المكتبة الرسمية لكل مزوّد دون تغيير.
 
-## لماذا وجدت (إطار محايد)
+| البروتوكول | Base URL | كيفية الاستدعاء | ملاحظات |
+|---|---|---|---|
+| **OpenAI** | `https://api.airai.cc/v1` | اضبط `base_url` في SDK الخاص بـ OpenAI | دردشة، تدفق (SSE)، رؤية، استدعاء دوال، تضمين، صوت، صور، realtime |
+| **Anthropic Claude** | `https://api.airai.cc` (الجذر) | اضبط `ANTHROPIC_BASE_URL` في SDK الخاص بـ Anthropic / Claude Code | واجهة Messages الأصلية، تدفق، tool use |
+| **Google Gemini** | `https://api.airai.cc` (الجذر) | اضبط `GOOGLE_GEMINI_BASE_URL` في CLI/SDK الخاص بـ Gemini | generateContent الأصلي |
+| **Replicate** | `https://api.airai.cc/replicate` | عميل متوافق مع Replicate | نماذج open-weight خلف shim واحد |
+| **Fal.ai** | `https://api.airai.cc/fal-ai/{model}` | عميل متوافق مع Fal | صور / فيديو خلف shim |
+| **Suno** | `https://api.airai.cc/suno/...` | عميل متوافق مع Suno | توليد موسيقى |
 
-معظم تطبيقات الذكاء الاصطناعي تُبنى فوق بنية فوترة بالبطاقة / بالعملة التقليدية.
-هذه البنية لا تخدم كل الشرائح: بعض المستخدمين لا يملكون بطاقة، وبعضهم يسوّي
-مدفوعاته بالعملات المشفرة افتراضياً، وبعض المناطق غير مشمولة بشروط الخدمة لدى
-كبار المزودين.
+> **لماذا الجذر لـ Claude وGemini؟** SDK الخاص بـ Anthropic وGemini يرسل الطلبات
+> إلى جذر المزوّد (مثلاً `https://api.anthropic.com`)، لا إلى مسار فرعي `/v1`.
+> وجّه `ANTHROPIC_BASE_URL` / `GOOGLE_GEMINI_BASE_URL` إلى `https://api.airai.cc`
+> فتقدّم البوابة المسار الأصلي. أما SDK الخاص بـ OpenAI فيتوقع `/v1`، لذا استخدم
+> `https://api.airai.cc/v1`.
 
-هذه النقطة هي **مسار تسوية محايد**: USDT (عملة مشفرة) افتراضياً، بلا بطاقة،
-بلا KYC. نفس واجهة OpenAI المتوافقة التي تستخدمها. صُممت لتوجد *إلى جانب*
-وسائل الدفع الحالية كمسار إضافي — لا لاستبدالها.
+## ماذا يمكنك بناء
+
+| القدرة | أمثلة النماذج |
+|---|---|
+| دردشة (نص) | gpt-4o، claude-3.5-sonnet، deepseek-chat، gemini-1.5-pro |
+| تدفق (SSE) | كل نماذج الدردشة |
+| رؤية (صورة مدخلة) | gpt-4o، claude-3.5-sonnet، gemini-1.5-pro |
+| استدلال (o-series) | o1، o3، o4-mini (`low`/`medium`/`high`) |
+| استدعاء دوال / tool use | كل النماذج القادرة |
+| تضمين | text-embedding-3-small، text-embedding-3-large، ada-002 |
+| صوت (ASR + TTS) | whisper-1، tts-1 (6 أصوات) |
+| صور | DALL·E 3، gpt-image-1، FLUX، Seedream، imagen-4، qwen-image |
+| Realtime (websocket) | gpt-4o-realtime |
+| فيديو (غير متزامن) | Kling، Luma، MiniMax، Jimeng، Fal |
+| موسيقى | Suno |
+
+## النماذج
+
+العائلات الكبيرة الموجّهة عبر هذه البوابة:
+
+- **GPT** — gpt-4o، gpt-4o-mini، gpt-4.1، o1 / o3 / o4-mini (استدلال)
+- **Claude** — claude-3.5-sonnet، claude-3.7-sonnet، claude-opus-4، claude-haiku
+- **DeepSeek** — deepseek-chat، deepseek-reasoner
+- **Gemini** — gemini-1.5-pro، gemini-2.0-flash، gemini-2.5-pro
+- **صور** — DALL·E 3، gpt-image-1، FLUX.1، Seedream، imagen-4، qwen-image
+- **صوت** — whisper-1 (ASR)، tts-1 (TTS، 6 أصوات)
+- **تضمين** — text-embedding-3-small / -3-large، text-embedding-ada-002
+- **Realtime** — gpt-4o-realtime (websocket)
+- **فيديو** — Kling، Luma، MiniMax، Jimeng، Fal (غير متزامن)
+- **موسيقى** — Suno
+
+المرجع الكامل: [`../models.md`](../models.md).
+
+## البرامج والعملاء (دروس)
+
+كل عميل أدناه تم التحقق منه مقابل هذه البوابة. الإعداد دائماً نفس الفكرة: وجّه
+`base_url` الخاص به (أسلوب OpenAI) أو متغيّر بيئة المزوّد (Claude / Gemini) إلى
+العناوين أعلاه.
+
+| العميل / الأداة | البروتوكول | أين يُضبط |
+|---|---|---|
+| **ChatBox** | OpenAI | API مخصّص + base URL |
+| **CherryStudio** | OpenAI + Claude MCP | إعدادات النموذج؛ رابط خادم MCP |
+| **Cursor** | OpenAI (BYOK) | حيلة البادئة `new-` |
+| **Cline** | OpenAI | base URL متوافق مع OpenAI |
+| **Codex** | OpenAI | `config.toml` (3 منصات) |
+| **aider** | OpenAI | `--openai-api-base` |
+| **Gemini CLI** | Gemini أصلي | `GOOGLE_GEMINI_BASE_URL` |
+| **Claude Code** | Anthropic أصلي | `ANTHROPIC_BASE_URL` |
+| **LobeChat** | OpenAI | إعدادات المزوّد |
+| **Dify** | OpenAI | إعداد مزوّد النموذج |
+| **N8N** | OpenAI | عقدة HTTP / OpenAI |
+| **NextChat** | OpenAI | متغيّر `BASE_URL` |
+| **Immersive Translate** | OpenAI | قاعدة واجهة ترجمة API |
+| **LangChain** | OpenAI / Anthropic / Gemini | `base_url` لنموذج الدردشة |
+| **LlamaIndex** | OpenAI | `OPENAI_BASE_URL` |
+
+دليل خطوة بخطوة للـ 15: [`../examples/frontends.md`](../examples/frontends.md).
 
 ## البداية السريعة
 
 ```python
-OPENAI_BASE_URL = "https://api.airai.cc/v1"
-OPENAI_API_KEY  = "<مفتاحك>"   # احصل عليه عند التسجيل أو عبر TG @mmrcle
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="https://api.airai.cc/v1",
+    api_key="YOUR_KEY",          # عند التسجيل أو عبر TG @mmrcle
+)
+r = client.chat.completions.create(
+    model="gpt-4o",
+    messages=[{"role":"user","content":"مرحبا"}],
+)
+print(r.choices[0].message.content)
 ```
 
-- Python: طالع [`examples/python.md`](../examples/python.md)
-- Node: طالع [`examples/node.md`](../examples/node.md)
-- curl: طالع [`examples/curl.md`](../examples/curl.md)
-- ملاحظة Claude Code / بروتوكول Anthropic: طالع [`examples/claude-code.md`](../examples/claude-code.md)
-- LibreChat / OpenWebUI / SillyTavern: طالع [`examples/frontends.md`](../examples/frontends.md)
+Claude الأصلي: `export ANTHROPIC_BASE_URL="https://api.airai.cc"`. Gemini الأصلي:
+`export GOOGLE_GEMINI_BASE_URL="https://api.airai.cc"`.
+
+- Python: [`../examples/python.md`](../examples/python.md)
+- Node: [`../examples/node.md`](../examples/node.md)
+- curl: [`../examples/curl.md`](../examples/curl.md)
+- Claude Code: [`../examples/claude-code.md`](../examples/claude-code.md)
+- Gemini CLI: [`../examples/gemini-cli.md`](../examples/gemini-cli.md)
+- صور / صوت / تضمين / realtime / مهام غير متزامنة: [`../examples/`](../examples/)
 
 ## الحصول على مفتاح تجريبي
 
@@ -52,26 +127,19 @@ OPENAI_API_KEY  = "<مفتاحك>"   # احصل عليه عند التسجيل �
 2. **راسلنا على TG:** `@mmrcle` — لمناقشة التوريد الأبيض (white-label) / الجملة،
    أو مفاتيح تجريبية، أو أسئلة التكامل.
 
-## النماذج
-
-مئات النماذج في عائلات متعددة، منها:
-
-- **OpenAI:** GPT-4o / 4o-mini وسلسلة o-series والتضمينات
-- **Claude:** Opus / Sonnet / Haiku (عبر مسار متوافق مع OpenAI)
-- **DeepSeek:** V3 / R1 ونسخها المقطّرة
-- **الصور:** SD وFlux وواجهات صور غربية شائعة
-- **التضمين / إعادة الترتيب** حيث متاح
-
-القائمة الحية عبر `/v1/models`.
-
 ## التسعير
 
-شرائح شفافة مقارنة بسعر القائمة الرسمي، في نطاق **~0.03–0.3 من السعر الرسمي**
-حسب الشريحة والعائلة. بلا رسوم شهرية. ادفع حسب الاستخدام. التسوية بـ USDT.
+ثلاثة فئات، تُعبَّر كـ **مضاعِف لسعر القائمة الرسمي**:
 
-- **Standard** (~0.3): استخدام عام، صور، تضمينات
-- **Pro** (~0.15): أعباء Claude / البرمجة الثقيلة
-- **Wholesale** (~0.09): مشغّلو حجم كبير، توريد أبيض upstream
+| الفئة | المضاعِف | مقارنة بالرسمي | لـ |
+|---|---|---|---|
+| **Standard** | 0.3× | ~70% أقل | المطوّرون، ادفع حسب الاستخدام |
+| **Pro** | 0.15× | ~85% أقل | الفرق ذات الحجم المستقر |
+| **Wholesale** | 0.09× | ~91% أقل | الحجم العالي / الموزّعون |
+
+نموذج **مجموعة تسعير**: كل عائلة (دردشة، استدلال، رؤية، صور، صوت، تضمين، فيديو،
+موسيقى، realtime) تحمل تعديلاً بسيطاً فوق مضاعِف فئتك. التفاصيل:
+[`../PRICING.md`](../PRICING.md).
 
 ## المنطقة والتوفر
 
@@ -81,22 +149,19 @@ OPENAI_API_KEY  = "<مفتاحك>"   # احصل عليه عند التسجيل �
 ## التسوية
 
 - **USDT** (TRC-20) افتراضياً — بلا بطاقة، بلا KYC.
-- تُنظر العملات المشفرة الأخرى لحسابات الجملة / الكبيرة.
+- تُنظر العملات المشفرة الأخرى (BTC وغيره) لحسابات الجملة / الكبيرة.
 
 ## أسئلة شائعة
 
-**هل هذا بديل عن مزودي الحالي؟**
-لا. إنه مسار إضافي متوافق مع OpenAI يمكنك استدعاؤه للشرائح التي لا يخدمها
-stack الحالي لديك (مستخدمون بلا بطاقة، تسوية بالعملات المشفرة، مناطق خارج شروط
-مزودك).
+**هل هذا مجرد proxy لـ OpenAI؟**
+لا. يكشف نقاط نهاية أصلية لـ Anthropic وGemini، فيمكنك متابعة استخدام SDK الرسمي
+لكل مزوّد. كما يعمل shim لـ Replicate / Fal / Suno.
 
 **هل أحتاج لإعادة كتابة كودي؟**
-إن كان عميلك يتحدث واجهة OpenAI، فتتغير فقط `base_url` و`api_key`.
+لا. إن كان عميلك يتحدث API OpenAI / Anthropic / Gemini، فتتغير فقط `base_url`
+(أو متغيّر بيئة المزوّد). لا شيء غير ذلك.
 
 **كيف أتحقق قبل الدفع؟**
 سجّل ← أرصدة تجريبية ← شغّل أعباء عملك على النقطة.
 
-*دليل تكامل تقني. يُشغّل بشكل مستقل؛ يصف هذا المستند النقطة وطريقة الاتصال،
-وليس عرضاً ترويجياً.*
-
-🔗 التوثيق الكامل بالإنجليزية: [README.md](../README.md) · أمثلة: [examples/](../examples/)
+🔗 التوثيق الكامل بالإنجليزية: [README.md](../README.md) · أمثلة: [examples/](../examples/) · النماذج: [models.md](../models.md)
