@@ -5,3 +5,6 @@
 config.local.*
 node_modules/
 .DS_Store
+
+# local-only Chinese draft — keep the repo English-only
+中文接入文档.md

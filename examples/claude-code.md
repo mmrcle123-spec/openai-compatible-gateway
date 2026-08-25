@@ -4,28 +4,51 @@
 Messages API), not just OpenAI chat. So Claude Code and the Anthropic SDK can
 point at it directly — **no protocol shim needed**.
 
+> **Base URL = root domain.** The Anthropic SDK sends requests to the provider
+> root (e.g. `https://api.anthropic.com`), **not** a `/v1` sub-path. Point
+> `ANTHROPIC_BASE_URL` at `https://api.airai.cc` (root).
+
 ## Claude Code (native)
 
 ```bash
-export ANTHROPIC_BASE_URL="https://api.airai.cc/v1/anthropic"   # confirm exact path
-export ANTHROPIC_API_KEY="<your-gateway-key>"
+export ANTHROPIC_BASE_URL="https://api.airai.cc"
+export ANTHROPIC_API_KEY="YOUR_KEY"
 ```
-Then run `claude` as usual. Requests go out in the Anthropic Messages shape and
-the gateway answers in the same shape.
+
+Then run `claude` as usual. (To persist: `claude --set-env
+ANTHROPIC_BASE_URL=https://api.airai.cc`.) Requests go out in the Anthropic
+Messages shape and the gateway answers in the same shape.
 
 ## Anthropic SDK (Python)
 
 ```python
-from anthropic import Anthropic
-client = Anthropic(
-    base_url="https://api.airai.cc/v1/anthropic",   # confirm exact path
-    api_key="<your-gateway-key>",
+import anthropic
+client = anthropic.Anthropic(
+    base_url="https://api.airai.cc",     # root domain
+    api_key="YOUR_KEY",
 )
-client.messages.create(
+r = client.messages.create(
     model="claude-3-5-sonnet",
     max_tokens=512,
     messages=[{"role": "user", "content": "Explain base_url in one line."}],
 )
+print(r.content[0].text)
+```
+
+## Anthropic SDK (Node)
+
+```javascript
+import Anthropic from "anthropic";
+const client = new Anthropic({
+  baseURL: "https://api.airai.cc",
+  apiKey: process.env.ANTHROPIC_API_KEY,
+});
+const r = await client.messages.create({
+  model: "claude-3-5-sonnet",
+  max_tokens: 512,
+  messages: [{ role: "user", content: "Hi" }],
+});
+console.log(r.content[0].text);
 ```
 
 ## OpenAI-SDK clients (also fine)
@@ -36,8 +59,9 @@ If you'd rather stay on the OpenAI shape, point the OpenAI SDK at
 whichever your client already speaks.
 
 ## TL;DR
-- **Claude Code / Anthropic SDK** → point `ANTHROPIC_BASE_URL` at the gateway's
-  Anthropic-native URL. Works directly.
+
+- **Claude Code / Anthropic SDK** → point `ANTHROPIC_BASE_URL` at
+  `https://api.airai.cc` (root). Works directly.
 - **OpenAI SDK** → point `base_url` at `https://api.airai.cc/v1`, use
   `model: "claude-*"`. Also works.
 - Same models, your choice of dialect.
