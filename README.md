@@ -10,6 +10,7 @@
 - 💰 **Up to 80% cheaper** than official list price (up to 90% on high-volume tiers)
 - 🧩 **468+ models, one endpoint** — stop wiring a different provider per route
 - ⚡ **Drop-in OpenAI compatibility** — change `base_url` only, zero code rewrite
+- 🔌 **Plugs into NewAPI / One API** — works as an OpenAI-compatible channel, not just raw SDKs
 - 🌍 **USDT (TRC-20)** by default, **no KYC, no monthly fee**, pay as you go
 
 This guide is written for **operators who already run an app, gateway, or
@@ -117,6 +118,24 @@ up to 90% on high-volume tiers).
 Full breakdown: [`PRICING.md`](PRICING.md). Exact per-model rates are returned
 by the gateway's pricing endpoint and shown in the dashboard. Rates move with
 upstream cost; the table above is the operating band, not a fixed quote.
+
+---
+
+## Self-hosted gateways — 🔌 NewAPI / One API / VoAPI
+
+Beyond calling the endpoint straight from an OpenAI SDK, this gateway drops
+into **self-hosted API management panels as an OpenAI-compatible channel** — so
+it is *not* limited to raw OpenAI clients:
+
+- **NewAPI** (`Calcium-Ion/new-api`) — add a channel: Type = `OpenAI` (or
+  `Custom`), Base URL = `https://api.airai.cc/v1`, Key = your key.
+- **One API / VoAPI / similar panels** — same OpenAI-compatible channel config.
+- Any panel that can proxy an OpenAI-compatible upstream works the same way.
+
+Because all 468+ models sit behind one OpenAI-compatible URL, you point the
+panel at it **once** and expose every model to your users through the panel's
+own UI / key management. Step-by-step:
+[`examples/newapi.md`](examples/newapi.md).
 
 ---
 
